@@ -1,0 +1,702 @@
+package com.sample
+ 
+import com.sample.Presenter;
+ 
+ declare CarData
+ 	question : String
+ 	answer : String
+ end
+ 
+
+rule "qst1"
+	when
+	then
+		String q = "WHY DO YOU WANT A CLASSIC?";
+		String[] options = {"RELIABILITY AND CONVENIENCE BORE ME",
+			 "I GUESS I'M MAKING SOME KIND OF STATEMENT ABOUT SOMETHING?",
+			 "NEW CARS HAVE NO SOUL",
+			 "I PREFER THE STYLE",
+			 "LOVE SPEED, HATE SAFETY"};
+		insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "qst2"
+	when  
+		CarData(question.equals("WHY DO YOU WANT A CLASSIC?")
+			&& answer.equals("RELIABILITY AND CONVENIENCE BORE ME"))
+	then
+		String q = "OH YEAH? WHY'S THAT?";
+		String [] options = {"I WANT TO KNOW HOW CARS WORK",
+			 "I'M EROTICALLY DRAWN TO TOW TRUCKS AND FREEWAY SHOULDERS"};
+		insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "qst3"
+	when
+		CarData(question.equals("OH YEAH? WHY'S THAT?")
+			&& answer.equals("I WANT TO KNOW HOW CARS WORK"))
+	then
+		String q = "SO, SOMETHING REALLY SIMPLE?";
+		String [] options = {"MORE ARCHAIC",
+			 "NOT THAT ARCHAIC?",
+			  "SOUNDS GOOD"};
+		insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "ans3.1"
+	when
+		CarData(question.equals("SO, SOMETHING REALLY SIMPLE?")
+				&& answer.equals("MORE ARCHAIC"))
+	then
+		Presenter.answer("Ford Model T");
+end
+
+rule "ans3.2"
+	when
+		CarData(question.equals("SO, SOMETHING REALLY SIMPLE?")
+				&& answer.equals("NOT THAT ARCHAIC"))
+	then
+		Presenter.answer("Ford Model A");
+end
+
+rule "ans3.3"
+	when
+		CarData(question.equals("SO, SOMETHING REALLY SIMPLE?")
+				&& answer.equals("SOUNDS GOOD"))
+	then
+		Presenter.answer("\nCitroen 2CV \nVW Thing \nWillys Jeep \nHonda Civic");
+end
+
+rule "qst4"
+	when
+		CarData(question.equals("OH YEAH? WHY'S THAT?")
+			&& answer.equals("I'M EROTICALLY DRAWN TO TOW TRUCKS AND FREEWAY SHOULDERS"))
+	then
+		String q = "OK, SHOULD IT BE PRETTY QUICK?";
+		String [] options = {"ALSO REALLY LOVELY",
+			 "LOTUS ELAN"};
+		insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "ans4.1"
+	when
+		CarData(question.equals("OK, SHOULD IT BE PRETTY QUICK?")
+					&& answer.equals("ALSO REALLY LOVELY"))
+	then
+		Presenter.answer("\nAlfa Romeo Giulia Super");
+end
+
+rule "ans4.2"
+	when
+		CarData(question.equals("OK, SHOULD IT BE PRETTY QUICK?")
+					&& answer.equals("LOTUS ELAN"))
+	then
+		Presenter.answer("\nLotus Elan");
+end
+
+rule "qst5"
+	when CarData(question.equals("WHY DO YOU WANT A CLASSIC?")
+					&& answer.equals("I GUESS I'M MAKING SOME KIND OF STATEMENT ABOUT SOMETHING?"))
+	then
+		String q = "GREAT. WHAT STATEMENT?";
+		String [] options = {"I'M REALLY RICH BUT LIKE TO PRETEND I'M STILL A HIPPIE",
+			 "THE MOTHERSHIP LEFT ME IN PARIS",
+			 "I RUN A NYC-THEMED DINER IN LAS VEGAS",
+			 "I LIVE DANGEROUSLY AND NADER CAN SUCK IT",
+			 "I WILL ONLY DRIVE VEHICLES WITH TWO DISTINCT LUGGAGE AREAS",
+			 "I'M A KOOK. AN AMERICAN KOOK",
+			 "I TAKE DRIVING SERIOUSY AND HAVE THE GLOVES TO PROVE IT",
+			 "MY WALLET IS ON A CHAIN",
+			 "I'M A REFUGEE FROM AN ALTERNATE FUTURE WITH ZEPPELINS AND SHIT",
+			 "I LIKE BEING PART OF A MASSIVE AUTOMOTIVE SUBCULTURE",
+			 "I HATE PEOPLE KNOWING WHAT I DRIVE",
+			 "I KINDA WANTED A MOTORCYCLE, BUT I HAVE NO BALANCE"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end
+	
+rule "ans5.1"
+	when
+		CarData(question.equals("GREAT. WHAT STATEMENT?")
+					&& answer.equals("I'M REALLY RICH BUT LIKE TO PRETEND I'M STILL A HIPPIE"))
+	then
+		Presenter.answer("\nVW Type 2 Microbus");
+end
+
+rule "ans5.2"
+	when
+		CarData(question.equals("GREAT. WHAT STATEMENT?")
+					&& answer.equals("THE MOTHERSHIP LEFT ME IN PARIS"))
+	then
+		Presenter.answer("\nCitroen SM");
+end
+		
+rule "ans5.3"
+	when
+		CarData(question.equals("GREAT. WHAT STATEMENT?")
+					&& answer.equals("I RUN A NYC-THEMED DINER IN LAS VEGAS"))
+	then
+		Presenter.answer("\nChecker Marathon");
+end
+
+rule "ans5.4"
+	when
+		CarData(question.equals("GREAT. WHAT STATEMENT?")
+					&& answer.equals("I LIVE DANGEROUSLY AND NADER CAN SUCK IT"))
+	then
+		Presenter.answer("\nChevy Corvair");
+end
+
+rule "qst5.5.1"
+	when
+		CarData(question.equals("GREAT. WHAT STATEMENT?")
+				&& answer.equals("I WILL ONLY DRIVE VEHICLES WITH TWO DISTINCT LUGGAGE AREAS"))
+	then 
+		String q = "I WILL ONLY DRIVE VEHICLES WITH TWO DISTINCT LUGGAGE AREAS";
+		String [] options = {"VW Type III?",
+			 "SOMETHING FASTER?"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "ans5.5.2"
+	when
+		CarData(question.equals("I WILL ONLY DRIVE VEHICLES WITH TWO DISTINCT LUGGAGE AREAS")
+				&& answer.equals("VW Type III?")) or
+		CarData(question.equals("SOMETHING FASTER?")
+				&& answer.equals("NO"))
+	then 
+		Presenter.answer("\nVW Type III");
+end	
+
+rule "qst5.5.3"
+	when
+		CarData(question.equals("I WILL ONLY DRIVE VEHICLES WITH TWO DISTINCT LUGGAGE AREAS")
+				&& answer.equals("SOMETHING FASTER?"))
+	then 
+		String q = "SOMETHING FASTER?";
+		String [] options = {"NO",
+			 "PORSCHE 914",
+			 "EVEN FASTER"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end	
+
+rule "ans5.5.3"
+	when
+		CarData(question.equals("SOMETHING FASTER?")
+				&& answer.equals("PORSCHE 914?"))
+	then 
+		Presenter.answer("\nPorsche 914");
+end	
+
+rule "ans5.5.4"
+	when
+		CarData(question.equals("SOMETHING FASTER?")
+				&& answer.equals("EVEN FASTER"))
+	then 
+		Presenter.answer("\nDe Tomaso Mangusta");
+end	
+
+
+rule "ans5.6"
+	when
+		CarData(question.equals("GREAT. WHAT STATEMENT?")
+					&& answer.equals("I'M A KOOK. AN AMERICAN KOOK"))
+	then
+		Presenter.answer("\nAMC Pacer \nAMC Gremlin \nAMC AMX");
+end
+
+rule "ans5.7"
+	when
+		CarData(question.equals("GREAT. WHAT STATEMENT?")
+					&& answer.equals("I TAKE DRIVING SERIOUSY AND HAVE THE GLOVES TO PROVE IT"))
+	then
+		Presenter.answer("\nBMW E30 \nPorsche 911");
+end
+
+rule "qst6"
+	when
+		CarData(question.equals("GREAT. WHAT STATEMENT?")
+					&& answer.equals("MY WALLET IS ON A CHAIN"))
+	then
+		String q = "MY WALLET IS ON A CHAIN";
+		String [] options = {"FORD FALCON?",
+			 "PLYMOUTH VALIANT?",
+			 "NOT FOR STYLE, I'M TIRED OF LOSING IT"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "ans6.1"
+	when
+		CarData(question.equals("MY WALLET IS ON A CHAIN")
+					&& answer.equals("FORD FALCON?"))
+	then
+		Presenter.answer("\nFord Falcon");
+end
+
+rule "ans6.2"
+	when
+		CarData(question.equals("MY WALLET IS ON A CHAIN")
+					&& answer.equals("PLYMOUTH VALIANT?"))
+	then
+		Presenter.answer("\nPlymouth Valiant");
+end
+
+rule "ans6.3"
+	when
+		CarData(question.equals("MY WALLET IS ON A CHAIN")
+					&& answer.equals("NOT FOR STYLE, I'M TIRED OF LOSING IT"))
+	then
+		Presenter.answer("\nRambler American");
+end
+
+rule "ans5.9"
+	when
+		CarData(question.equals("GREAT. WHAT STATEMENT?")
+					&& answer.equals("I'M A REFUGEE FROM AN ALTERNATE FUTURE WITH ZEPPELINS AND SHIT"))
+	then
+		Presenter.answer("\nTatra T87");
+end
+
+rule "ans5.10"
+	when
+		CarData(question.equals("GREAT. WHAT STATEMENT?")
+					&& answer.equals("I LIKE BEING PART OF A MASSIVE AUTOMOTIVE SUBCULTURE"))
+	then
+		Presenter.answer("\nVW Beetle \nBMW 2002 \nMGB \nDatsun 240Z \nVolvo 240");
+end
+
+rule "ans5.11"
+	when
+		CarData(question.equals("GREAT. WHAT STATEMENT?")
+					&& answer.equals("I HATE PEOPLE KNOWING WHAT I DRIVE"))
+	then
+		Presenter.answer("\nSterling 825 \nMitsubishi Starion \nIsuzu I-Mark");
+end
+
+rule "ans5.12"
+	when
+		CarData(question.equals("GREAT. WHAT STATEMENT?")
+					&& answer.equals("I KINDA WANTED A MOTORCYCLE, BUT I HAVE NO BALANCE"))
+	then
+		Presenter.answer("\nLotus 7");
+end
+
+rule "qst7"
+	when
+		CarData(question.equals("WHY DO YOU WANT A CLASSIC?")
+					&& answer.equals("I PREFER THE STYLE"))
+	then
+		String q = "OK, WHAT KIND OF STYLE?";
+		String [] options = {"AFRICAN DICTATOR",
+			 "I LOVE CORVAIRS BUT I LIVE IN A 3/4 SCALE UNIVERSE",
+			 "LIKE BUCK ROGER'S BOSS'S DAD",
+			 "I LOVE CHROME AND LOUD SHIRTS",
+			 "REALLY SLOW CARS THAT LOOK FAST",
+			 "I LOVE BRASS AND LANTERNS",
+			 "I CAN ONLY DRIVE CARS THAT ARE MUSEUM-WORTHY",
+			 "WORKING CLASS HERO, ALSO BEER",
+			 "CLASSIC GERMAN WITH A TOUCH OF PEDAL CONFUSION"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "ans7.1"
+	when
+		CarData(question.equals("OK, WHAT KIND OF STYLE?")
+					&& answer.equals("AFRICAN DICTATOR"))
+	then
+		Presenter.answer("\nMercedes-Benz 600");
+end
+
+rule "ans7.2"
+	when
+		CarData(question.equals("OK, WHAT KIND OF STYLE?")
+					&& answer.equals("I LOVE CORVAIRS BUT I LIVE IN A 3/4 SCALE UNIVERSE"))
+	then
+		Presenter.answer("\nNSU Prinz");
+end
+
+rule "ans7.3"
+	when
+		CarData(question.equals("OK, WHAT KIND OF STYLE?")
+					&& answer.equals("LIKE BUCK ROGER'S BOSS'S DAD"))
+	then
+		Presenter.answer("\n'59 Cadillac Eldorado");
+end
+
+rule "ans7.4"
+	when
+		CarData(question.equals("OK, WHAT KIND OF STYLE?")
+					&& answer.equals("I LOVE CHROME AND LOUD SHIRTS"))
+	then
+		Presenter.answer("\n'57 Chevy Bel Air");
+end
+
+rule "ans7.5"
+	when
+		CarData(question.equals("OK, WHAT KIND OF STYLE?")
+					&& answer.equals("REALLY SLOW CARS THAT LOOK FAST"))
+	then
+		Presenter.answer("\nOpel GT \nVW Karmann Ghia \nRenault Floride");
+end
+
+rule "ans7.6"
+	when
+		CarData(question.equals("OK, WHAT KIND OF STYLE?")
+					&& answer.equals("I LOVE BRASS AND LANTERNS"))
+	then
+		Presenter.answer("\nAnything Pre WWI \nMaybe a Packard?");
+end
+
+rule "ans7.7"
+	when
+		CarData(question.equals("OK, WHAT KIND OF STYLE?")
+					&& answer.equals("I CAN ONLY DRIVE CARS THAT ARE MUSEUM-WORTHY"))
+	then
+		Presenter.answer("\nCitroen DS \nLamborghini Miura \nCord 812");
+end
+
+rule "qst7.8"
+	when
+		CarData(question.equals("OK, WHAT KIND OF STYLE?")
+					&& answer.equals("WORKING CLASS HERO, ALSO BEER"))
+	then
+		String q = "WORKING CLASS HERO, ALSO BEER";
+		String [] options = {"DOES YOUR HAT SAY YOU'D RATHER PUSH A CHEVY?",
+			 "FORD MUSTANG",
+			 "WHAT DO YOU WANT FROM TIRES?"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "qst7.8.1"
+	when
+		CarData(question.equals("WORKING CLASS HERO, ALSO BEER")
+					&& answer.equals("DOES YOUR HAT SAY YOU'D RATHER PUSH A CHEVY?"))
+	then
+		String q = "DOES YOUR HAT SAY YOU'D RATHER PUSH A CHEVY?";
+		String [] options = {"DAMMIT, I LOST MY HAT",
+			 "SO IT DOES FRIEND"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "ans7.8.1.1"
+	when
+		CarData(question.equals("DOES YOUR HAT SAY YOU'D RATHER PUSH A CHEVY?")
+					&& answer.equals("DAMMIT, I LOST MY HAT"))
+	then
+		Presenter.answer("\nAMC AMX \nLamborghini Miura \nCord 812");
+end
+
+rule "ans7.8.1.2"
+	when
+		CarData(question.equals("DOES YOUR HAT SAY YOU'D RATHER PUSH A CHEVY?")
+					&& answer.equals("SO IT DOES FRIEND"))
+	then
+		Presenter.answer("\nChevy Camaro");
+end
+
+rule "ans7.8.2"
+	when
+		CarData(question.equals("WORKING CLASS HERO, ALSO BEER")
+					&& answer.equals("DOES YOUR HAT SAY YOU'D RATHER PUSH A CHEVY?"))
+	then
+		Presenter.answer("\nFord Mustang");
+end
+
+rule "qst7.8.3"
+	when
+		CarData(question.equals("WORKING CLASS HERO, ALSO BEER")
+					&& answer.equals("WHAT DO YOU WANT FROM TIRES?"))
+	then
+		String q = "WHAT DO YOU WANT FROM TIRES?";
+		String [] options = {"NOISE AND SMOKE",
+			 "NOISE, SMOKE, AND THE TRAILER PARK'S UNDYING RESPECT"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "ans7.8.3.1"
+	when
+		CarData(question.equals("WHAT DO YOU WANT FROM TIRES?")
+					&& answer.equals("NOISE AND SMOKE"))
+	then
+		Presenter.answer("\nFort Mustang Mach I \nChevy C3 Corvette");
+end
+
+rule "ans7.8.3.2"
+	when
+		CarData(question.equals("WHAT DO YOU WANT FROM TIRES?")
+					&& answer.equals("NOISE, SMOKE, AND THE TRAILER PARK'S UNDYING RESPECT"))
+	then
+		Presenter.answer("\nFox Body Mustang");
+end
+
+rule "ans7.9"
+	when
+		CarData(question.equals("OK, WHAT KIND OF STYLE?")
+					&& answer.equals("CLASSIC GERMAN WITH A TOUCH OF PEDAL CONFUSION"))
+	then
+		Presenter.answer("\nAudi 100");
+end
+
+rule "qst8"
+	when
+		CarData(question.equals("WHY DO YOU WANT A CLASSIC?")
+					&& answer.equals("NEW CARS HAVE NO SOUL"))
+	then
+		String q = "WHAT DOES SOUL MEAN TO YOU?";
+		String [] options = {"EASY: ABILITY TO DRIVE OFF A PIER INTO AN ESTUARY",
+			 "SYNONYM FOR WEIRD",
+			 "TECHNICALLY NOVEL",
+			 "SOUL MEANS THE CAR HAD AN HONEST JOB, LIKE A COP OR CABBIE",
+			 "IT MEANS RIDING IN IT IS LIKE SITTING ON A SOFA",
+			 "IT MEANS THE CAR IS OFTEN STARRING IN MOVIES",
+			 "IT COULD MEAN PURE EVIL?",
+			 "THE SOUL IS THE SPIRITS OF 43 DEAD CLOWNS HAUNTING THE CAR",
+			 "SOUL IS THE ABILITY TO GO A MILLION MILES WITH SU CARBS AND LUCAS ELECTRICS"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "ans8.1"
+	when
+		CarData(question.equals("WHAT DOES SOUL MEAN TO YOU?")
+					&& answer.equals("EASY: ABILITY TO DRIVE OFF A PIER INTO AN ESTUARY"))
+	then
+		Presenter.answer("\nAmphicar");
+end
+
+rule "ans8.2"
+	when
+		CarData(question.equals("WHAT DOES SOUL MEAN TO YOU?")
+					&& answer.equals("SYNONYM FOR WEIRD"))
+	then
+		Presenter.answer("\nBWM Isetta \nMesserschmidt Kabinroller \nSubaru 360");
+end
+
+rule "qst8.3"
+	when
+		CarData(question.equals("WHAT DOES SOUL MEAN TO YOU?")
+					&& answer.equals("TECHNICALLY NOVEL"))
+	then
+		String q = "LIKE WHAT?";
+		String [] options = {"INSTEAD OF PISTONS, SOME METAL HAMANTASCHEN",
+			 "CAN BURN COOKING OIL",
+			 "ENGINE IN THE WRONG PLACE (MAYBE COOLED BY WRONG STUFF)",
+			 "THEY THOUGHT THEY WERE BUILDING A PLANE"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "ans8.3.1"
+	when
+		CarData(question.equals("LIKE WHAT?")
+					&& answer.equals("INSTEAD OF PISTONS, SOME METAL HAMANTASCHEN"))
+	then
+		Presenter.answer("\nMazda RX-7");
+end
+
+rule "ans8.3.2"
+	when
+		CarData(question.equals("LIKE WHAT?")
+					&& answer.equals("CAN BURN COOKING OIL"))
+	then
+		Presenter.answer("\nMercedes Benz 300TD");
+end
+
+rule "ans8.3.3"
+	when
+		CarData(question.equals("LIKE WHAT?")
+					&& answer.equals("ENGINE IN THE WRONG PLACE (MAYBE COOLED BY WRONG STUFF)"))
+	then
+		Presenter.answer("\nPorsche 912 \nRenault Alpine");
+end
+
+rule "ans8.3.4"
+	when
+		CarData(question.equals("LIKE WHAT?")
+					&& answer.equals("THEY THOUGHT THEY WERE BUILDING A PLANE"))
+	then
+		Presenter.answer("\nSaab 96");
+end
+
+rule "ans8.4"
+	when
+		CarData(question.equals("WHAT DOES SOUL MEAN TO YOU?")
+					&& answer.equals("SOUL MEANS THE CAR HAD AN HONEST JOB, LIKE A COP OR CABBIE"))
+	then
+		Presenter.answer("\nFord Crown VIC \nDodge Monaco \nChevy Caprice");
+end
+
+rule "qst8.5"
+	when
+		CarData(question.equals("WHAT DOES SOUL MEAN TO YOU?")
+					&& answer.equals("IT MEANS RIDING IN IT IS LIKE SITTING ON A SOFA"))
+	then
+		String q = "IT MEANS RIDING IN IT IS LIKE SITTING ON A SOFA";
+		String [] options = {"LINCOLN TOWN CAR?",
+			 "A HUGE FAST FWD SOFA?"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "ans8.5.1"
+	when
+		CarData(question.equals("IT MEANS RIDING IN IT IS LIKE SITTING ON A SOFA")
+					&& answer.equals("LINCOLN TOWN CAR?"))
+	then
+		Presenter.answer("\nLincoln Town Car");
+end
+
+rule "ans8.5.2"
+	when
+		CarData(question.equals("IT MEANS RIDING IN IT IS LIKE SITTING ON A SOFA")
+					&& answer.equals("A HUGE FAST FWD SOFA?"))
+	then
+		Presenter.answer("\nOlds Toronado");
+end
+
+rule "ans8.6"
+	when
+		CarData(question.equals("WHAT DOES SOUL MEAN TO YOU?")
+					&& answer.equals("IT MEANS THE CAR IS OFTEN STARRING IN MOVIES"))
+	then
+		Presenter.answer("\nDelorean DMC-12 \nVW Beetle");
+end
+
+rule "ans8.7"
+	when
+		CarData(question.equals("WHAT DOES SOUL MEAN TO YOU?")
+					&& answer.equals("IT COULD MEAN PURE EVIL?"))
+	then
+		Presenter.answer("\nBuick GNX \nPlymouth Fury");
+end
+
+rule "ans8.8"
+	when
+		CarData(question.equals("WHAT DOES SOUL MEAN TO YOU?")
+					&& answer.equals("THE SOUL IS THE SPIRITS OF 43 DEAD CLOWNS HAUNTING THE CAR"))
+	then
+		Presenter.answer("\nNash Metropolitan");
+end
+
+rule "ans8.9"
+	when
+		CarData(question.equals("WHAT DOES SOUL MEAN TO YOU?")
+					&& answer.equals("SOUL IS THE ABILITY TO GO A MILLION MILES WITH SU CARBS AND LUCAS ELECTRICS"))
+	then
+		Presenter.answer("\nVolvo P1800");
+end
+
+rule "qst9"
+	when
+		CarData(question.equals("WHY DO YOU WANT A CLASSIC?")
+					&& answer.equals("LOVE SPEED, HATE SAFETY"))
+	then
+		String q = "REAL SPEED OR JUST FEELS SPEEDY?";
+		String [] options = {"I LOVE SPEED AND MONEY",
+			 "I HAVE A DEATH WISH",
+			 "FAST AND CHEAP",
+			 "FAKE IS FINE"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "ans9.3"
+	when
+		CarData(question.equals("REAL SPEED OR JUST FEELS SPEEDY?")
+					&& answer.equals("FAST AND CHEAP"))
+	then
+		Presenter.answer("\nDodge Omni GLH");
+end
+
+rule "ans9.4"
+	when
+		CarData(question.equals("REAL SPEED OR JUST FEELS SPEEDY?")
+					&& answer.equals("FAKE IS FINE"))
+	then
+		Presenter.answer("\nDatsun 510 \nMini Cooper \nMk1 VW Golf GTI \nHonda CRX");
+end
+
+rule "qst10"
+	when
+		CarData(question.equals("REAL SPEED OR JUST FEELS SPEEDY?")
+					&& answer.equals("I HAVE A DEATH WISH"))
+	then
+		String q = "HOW DO YOU WANT TO GO?";
+		String [] options = {"CRUSHED BY V8 IN TINY SPACE",
+			 "ELECTROCUTED BY WIPER SWITCH",
+			 "BLAZE OF GLORY",
+			 "CAR, TREE",
+			 "RUN OUT OF TALENT, OFF CLIFF"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "ans10.1"
+	when
+		CarData(question.equals("HOW DO YOU WANT TO GO?")
+					&& answer.equals("CRUSHED BY V8 IN TINY SPACE"))
+	then
+		Presenter.answer("\nSunbeam Tiger");
+end
+
+rule "ans10.2"
+	when
+		CarData(question.equals("HOW DO YOU WANT TO GO?")
+					&& answer.equals("ELECTROCUTED BY WIPER SWITCH"))
+	then
+		Presenter.answer("\nJaguar E-Type");
+end
+
+rule "ans10.3"
+	when
+		CarData(question.equals("HOW DO YOU WANT TO GO?")
+					&& answer.equals("BLAZE OF GLORY"))
+	then
+		Presenter.answer("\nFerrari Testarossa");
+end
+
+rule "ans10.4"
+	when
+		CarData(question.equals("HOW DO YOU WANT TO GO?")
+					&& answer.equals("CAR, TREE"))
+	then
+		Presenter.answer("\nCamaro Iroc-Z \nPlymouth Road Runner");
+end
+
+rule "ans10.5"
+	when
+		CarData(question.equals("HOW DO YOU WANT TO GO?")
+					&& answer.equals("RUN OUT OF TALENT, OFF CLIFF"))
+	then
+		Presenter.answer("\nPorsche Spyder");
+end
+
+rule "qst11"
+	when
+		CarData(question.equals("REAL SPEED OR JUST FEELS SPEEDY?")
+					&& answer.equals("I LOVE SPEED AND MONEY"))
+	then
+		String q = "GREAT! WHO ARE YOU?";
+		String [] options = {"SOME KIND OF DUKE AND I RALLY",
+			 "MY GOAL IS TO DRIVE MY CHILDHOOD BEDROOM POSTERS",
+			 "I HAVE A WEIRD FETISH WHERE I LIKE \n PEOPLE ASKING 'IS IT A REPLICA?'"};
+			insert(new CarData(q, Presenter.ask(q, options)));
+end
+
+rule "ans11.1"
+	when
+		CarData(question.equals("GREAT! WHO ARE YOU?")
+					&& answer.equals("SOME KIND OF DUKE AND I RALLY"))
+	then
+		Presenter.answer("\nLancia Stratos");
+end
+
+rule "ans11.2"
+	when
+		CarData(question.equals("GREAT! WHO ARE YOU?")
+					&& answer.equals("MY GOAL IS TO DRIVE MY CHILDHOOD BEDROOM POSTERS"))
+	then
+		Presenter.answer("\nLamborghini Countach \nFerrari 250 GT10");
+end
+
+rule "ans11.3"
+	when
+		CarData(question.equals("GREAT! WHO ARE YOU?")
+					&& answer.equals("I HAVE A WEIRD FETISH WHERE I LIKE PEOPLE ASKING 'IS IT A REPLICA?'"))
+	then
+		Presenter.answer("\nAC Cobra \nPorsche 356 Speedster");
+end
